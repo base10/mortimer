@@ -7,7 +7,7 @@ Keeping docs with source is a good way to version docs, and nobody can remember 
 Wiki's anyway.  You can generate docs when you want to see pretty HTML, though it's just as reasonable
 to read the ASCII markdown.
 
-Mortimer is partially inspired by puppet-docs, which itself was inspired by Rails Guides.   
+Mortimer is partially inspired by puppet-docs, which itself was inspired by Rails Guides.
 Mortimer is a LOT simpler than that, intended for extra busy developers who don't need
 to publish something that's super-shiny.
 
@@ -22,7 +22,7 @@ Requirements
 ============
 
     # need ruby
-    gem install maruku
+    gem install mortimer
 
     # create a lot of markdown files (.md) in a directory, call it 'foo'
     # create a header.snippet file in the 'foo' directory
@@ -32,8 +32,7 @@ Demo
 ====
 
     # see examples directory files to see what little is in there
-
-    ruby ./lib/mortimer.rb --indir examples --outdir output
+    mortimer --indir examples --outdir output
 
     # now look in the output directory
 
@@ -59,4 +58,5 @@ Contributors
 ============
 
 Michael DeHaan, michael.dehaan AT gmail DOT com
+Nathan L. Walls, nathan AT wallscorp DOT us
 
