@@ -1,3 +1,4 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'maruku'
+# Specify your gem's dependencies in mortimer.gemspec
+gemspec
