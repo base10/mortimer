@@ -8,6 +8,8 @@ TODO
 * Add some directory recursion that automatically finds things and builds an index automatically
   (index.md first, then index.html via the main codepath)
 * Add some minimal dynamic widget to each page that allows page selection or includes the tree.
+* Support other Markdown file extensions
+    * .md is supported currently
 
 Contributors!  Do stuff and earn open source points!
 
