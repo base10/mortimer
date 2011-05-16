@@ -4,3 +4,7 @@ source "http://rubygems.org"
 gemspec
 
 gem 'maruku'
+
+group :development do
+  gem "rspec"
+end
