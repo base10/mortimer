@@ -1,11 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Mortimer do
+describe Mortimer::Core do
   attributes = %w(input_dir output_dir)
 
   describe "attributes" do
+    before do
+      @mort = Mortimer::Core.new
+    end
+
+    subject { @mort }
+
     attributes.each do |item|
-      it "should include a #{item}"
+      it { should respond_to item.to_sym }
     end
   end
 
