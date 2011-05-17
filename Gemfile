@@ -1,10 +1,5 @@
-source "http://rubygems.org"
-
-# Specify your gem's dependencies in mortimer.gemspec
+source :rubygems
 gemspec
 
 gem 'maruku'
-
-group :development do
-  gem "rspec"
-end
+gem "rspec"
