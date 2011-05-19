@@ -3,3 +3,4 @@ gemspec
 
 gem 'maruku'
 gem "rspec"
+gem "autotest"
