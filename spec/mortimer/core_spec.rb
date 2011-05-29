@@ -8,13 +8,46 @@ describe Mortimer::Core do
   attributes = %w(input_dir output_dir)
 
   describe "attributes" do
-    attributes.each do |item|
-      before do
-        @mort = new_mortimer
-      end
+    before do
+      @mort = new_mortimer
+    end
 
+    attributes.each do |item|
       subject { @mort }
       it { should respond_to item.to_sym }
+    end
+  end
+
+  describe "#initialize" do
+    context "passes" do
+      it "when given input and output directories" do
+        Dir.stub!(:exists?).and_return(true)
+        lambda { Mortimer::Core.new('/foo', '/bar') }.should_not raise_error
+      end
+    end
+
+    context "fails" do
+      specify "without input or output directories" do
+        expect { Mortimer::Core.new }.to raise_error
+      end
+
+      context "when missing valid" do
+        before(:each) do
+          Dir.should_receive(:exists?).with('/foo').and_return(false)
+        end
+
+        specify "input directory" do
+          expect { Mortimer::Core.new('/foo', '/tmp') }.to raise_error
+        end
+
+        specify "output directory" do
+          expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error
+        end
+      end
+
+      specify "" do
+        pending
+      end
     end
   end
 
