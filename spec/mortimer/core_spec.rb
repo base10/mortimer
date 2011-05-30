@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mortimer::Core do
   def new_mortimer
-    @mort = Mortimer::Core.new('/tmp', '/tmp')
+    mort = Mortimer::Core.new('/tmp', '/tmp')
+    return mort
   end
 
   attributes = %w(input_dir output_dir)
@@ -20,10 +21,17 @@ describe Mortimer::Core do
 
   describe "#initialize" do
     context "passes" do
+      before(:each) do
+        @mort = new_mortimer
+      end
+
       it "when given input and output directories" do
         Dir.stub!(:exists?).and_return(true)
         lambda { Mortimer::Core.new('/foo', '/bar') }.should_not raise_error
       end
+
+      specify { @mort.input_dir.should_not be_empty }
+      specify { @mort.output_dir.should_not be_empty }
     end
 
     context "fails" do
