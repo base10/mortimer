@@ -34,6 +34,7 @@ describe Mortimer::Core do
       context "when missing valid" do
         before(:each) do
           Dir.should_receive(:exists?).with('/foo').and_return(false)
+          Dir.should_receive(:exists?).with('/tmp').and_return(true)
         end
 
         specify "input directory" do
@@ -45,29 +46,7 @@ describe Mortimer::Core do
         end
       end
 
-      specify "" do
-        pending
-      end
-    end
-  end
-
-  describe "validation" do
-    before(:each) do
-      @mort = new_mortimer
-    end
-
-    describe "verifies essential attributes" do
-      attributes.each do |item|
-        it "verifies #{item} is specified or raises an exception" do
-          pending
-        end
-      end
-    end
-
-    describe "verifies valid directory" do
-      attributes.each do |item|
-        pending
-      end
+      it "and gives feedback"
     end
   end
 
