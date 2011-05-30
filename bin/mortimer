@@ -1,3 +1,27 @@
 #!/usr/bin/ruby
 
-puts "hello!"
+require 'getoptlong'
+require 'mortimer'
+
+opts = GetoptLong.new(
+  [ "--input_dir", "-i", GetoptLong::REQUIRED_ARGUMENT  ],
+  [ "--output_dir", "-o", GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+input_dir   = nil
+output_dir  = nil
+
+opts.each_option do |name,value|
+  case name
+    when '--input_dir'
+      input_dir = value
+    when '--output_dir'
+      output_dir = value
+  end
+end
+
+# GetoptLong is going to verify a value is provided to a required arg, but
+# won't enforce the presence of those arguments itself. Enforcement will
+# take place in the object itself
+mort = Mortimer::Core.new(input_dir, output_dir)
+mort.process
