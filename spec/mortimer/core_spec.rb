@@ -38,15 +38,13 @@ describe Mortimer::Core do
         end
 
         specify "input directory" do
-          expect { Mortimer::Core.new('/foo', '/tmp') }.to raise_error
+          expect { Mortimer::Core.new('/foo', '/tmp') }.to raise_error(/does not exist/)
         end
 
         specify "output directory" do
-          expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error
+          expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error(/does not exist/)
         end
       end
-
-      it "and gives feedback"
     end
   end
 

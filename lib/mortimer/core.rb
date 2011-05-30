@@ -20,13 +20,15 @@ module Mortimer
 
       [@input_dir, @output_dir].each do |path|
         if !Dir.exists?(path)
-          err_msg = { "#{path}" => "Directory does not exist" }
+          err_msg = "#{path} - Directory does not exist"
           errors.push( err_msg )
         end
       end
 
       if !errors.empty?
-        raise Exception
+        error_msg = errors.join("\n")
+
+        raise Exception, error_msg
       end
     end
   end
