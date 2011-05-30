@@ -19,7 +19,7 @@ describe Mortimer::Core do
     end
   end
 
-  describe "#initialize" do
+  describe "#initialize -- object instantiation" do
     context "passes" do
       before(:each) do
         @mort = new_mortimer
@@ -56,6 +56,6 @@ describe Mortimer::Core do
     end
   end
 
-  describe "processing" do
+  describe "#process -- Getting Morimer to convert Markdown to HTML" do
   end
 end
