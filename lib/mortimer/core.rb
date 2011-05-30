@@ -11,15 +11,27 @@ module Mortimer
       validate_directories
     end
 
+    def process
+
+
+    end
+
     protected
 
     def validate_directories
       errors = Array.new
 
-      [@input_dir, @output_dir].each do |path|
-        if !Dir.exists?(path)
-          err_msg = "#{path} - Directory does not exist"
-          errors.push( err_msg )
+      ['input_dir', 'output_dir'].each do |method|
+        path = send(method)
+
+        if path.empty?
+          err_msg = "Required argument #{method} not specified"
+          errors.push err_msg
+        end
+
+        if !path.empty? && !Dir.exists?(path)
+          err_msg = "#{method} directory does not exist: #{path}"
+          errors.push err_msg
         end
       end
 

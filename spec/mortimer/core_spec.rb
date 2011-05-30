@@ -13,9 +13,9 @@ describe Mortimer::Core do
       @mort = new_mortimer
     end
 
-    attributes.each do |item|
+    attributes.each do |method|
       subject { @mort }
-      it { should respond_to item.to_sym }
+      it { should respond_to method }
     end
   end
 
@@ -30,13 +30,18 @@ describe Mortimer::Core do
         lambda { Mortimer::Core.new('/foo', '/bar') }.should_not raise_error
       end
 
-      specify { @mort.input_dir.should_not be_empty }
-      specify { @mort.output_dir.should_not be_empty }
+      attributes.each do |method|
+        it "#{method} should be set" do
+          @mort.send(method).should_not be_empty
+        end
+      end
     end
 
     context "fails" do
       specify "without input or output directories" do
         expect { Mortimer::Core.new }.to raise_error
+        expect { Mortimer::Core.new('', '/tmp') }.to raise_error(/not specified/)
+        expect { Mortimer::Core.new('/tmp', '') }.to raise_error(/not specified/)
       end
 
       context "when missing valid" do
