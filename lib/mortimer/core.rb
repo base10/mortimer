@@ -8,8 +8,6 @@ module Mortimer
       @input_dir  = input_dir
       @output_dir = output_dir
 
-      @errors     = Array.new
-
       validate_directories
     end
 
