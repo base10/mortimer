@@ -6,7 +6,8 @@ describe Mortimer::Core do
     return mort
   end
 
-  attributes = %w(input_dir output_dir)
+  init_attributes = %w(input_dir output_dir)
+  attributes = init_attributes + %w(header footer)
 
   describe "attributes" do
     before do
@@ -30,7 +31,7 @@ describe Mortimer::Core do
         lambda { Mortimer::Core.new('/foo', '/bar') }.should_not raise_error
       end
 
-      attributes.each do |method|
+      init_attributes.each do |method|
         it "#{method} should be set" do
           @mort.send(method).should_not be_empty
         end
@@ -62,7 +63,7 @@ describe Mortimer::Core do
       specify "when output directory can't be created" do
         Dir.should_receive(:exists?).with('/foo').and_return(false)
         Dir.should_receive(:exists?).with('/tmp').and_return(true)
-        Dir.stub!(:mkdir).and_raise(Errno::EACCES)
+        FileUtils.stub!(:mkdir_p).and_raise(Errno::EACCES)
 
         expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error(/Could not create directory/)
       end
@@ -71,9 +72,17 @@ describe Mortimer::Core do
 
   describe "#process -- Getting Morimer to convert Markdown to HTML" do
     before(:each) do
-      # Ensure the test output directory is empty
+      input_dir   = "../../test_input"
+      output_dir  = "../../test_output"
+
+      if Dir.exists?(output_dir)
+        FileUtils.rm_rf(output_dir)
+      end
+
+      Dir.mkdir(output_dir)
 
       # Instantiate a new object with the test_input and test_output directories
+      @mort = Mortimer::Core.new(input_dir, output_dir)
     end
 
     context "header and footer processing" do
