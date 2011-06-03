@@ -25,7 +25,7 @@ describe Mortimer::Core do
         @mort = new_mortimer
       end
 
-      it "when given input and output directories" do
+      specify "when given input and output directories" do
         Dir.stub!(:exists?).and_return(true)
         lambda { Mortimer::Core.new('/foo', '/bar') }.should_not raise_error
       end
@@ -34,6 +34,14 @@ describe Mortimer::Core do
         it "#{method} should be set" do
           @mort.send(method).should_not be_empty
         end
+      end
+
+      it "creates missing output directory if needed" do
+        Dir.should_receive(:exists?).with('/foo').and_return(false)
+        Dir.should_receive(:exists?).with('/tmp').and_return(true)
+        Dir.should_receive(:mkdir).with('/foo').and_return(true)
+
+        expect { Mortimer::Core.new('/tmp', '/foo') }.to_not raise_error
       end
     end
 
@@ -44,19 +52,19 @@ describe Mortimer::Core do
         expect { Mortimer::Core.new('/tmp', '') }.to raise_error(/not specified/)
       end
 
-      context "when missing valid" do
-        before(:each) do
-          Dir.should_receive(:exists?).with('/foo').and_return(false)
-          Dir.should_receive(:exists?).with('/tmp').and_return(true)
-        end
+      specify "when missing valid input directory" do
+        Dir.should_receive(:exists?).with('/foo').and_return(false)
+        Dir.should_receive(:exists?).with('/tmp').and_return(true)
 
-        specify "input directory" do
-          expect { Mortimer::Core.new('/foo', '/tmp') }.to raise_error(/does not exist/)
-        end
+        expect { Mortimer::Core.new('/foo', '/tmp') }.to raise_error(/does not exist/)
+      end
 
-        specify "output directory" do
-          expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error(/does not exist/)
-        end
+      specify "when output directory can't be created" do
+        Dir.should_receive(:exists?).with('/foo').and_return(false)
+        Dir.should_receive(:exists?).with('/tmp').and_return(true)
+        Dir.stub!(:mkdir).and_raise(Errno::EACCES)
+
+        expect { Mortimer::Core.new('/tmp', '/foo') }.to raise_error(/Could not create directory/)
       end
     end
   end

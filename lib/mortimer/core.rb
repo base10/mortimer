@@ -28,10 +28,21 @@ module Mortimer
           err_msg = "Required argument #{method} not specified"
           errors.push err_msg
         end
+      end
 
-        if !path.empty? && !Dir.exists?(path)
-          err_msg = "#{method} directory does not exist: #{path}"
-          errors.push err_msg
+      if !@input_dir.empty? && !Dir.exists?(@input_dir)
+        err_msg = "input_dir directory does not exist: #{@input_dir}"
+        errors.push err_msg
+      end
+
+      # If the output directory isn't empty and it doesn't exist, attempt to
+      # create it
+
+      if !@input_dir.empty? && !Dir.exists?(@output_dir)
+        begin
+          Dir.mkdir(@output_dir)
+        rescue Exception => e
+          errors.push "Could not create directory: #{e.to_s}"
         end
       end
 
