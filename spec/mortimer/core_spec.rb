@@ -70,5 +70,22 @@ describe Mortimer::Core do
   end
 
   describe "#process -- Getting Morimer to convert Markdown to HTML" do
+    before(:each) do
+      # Ensure the test output directory is empty
+
+      # Instantiate a new object with the test_input and test_output directories
+    end
+
+    context "header and footer processing" do
+
+    end
+
+    context "CSS processing" do
+
+    end
+
+    context "Markdown file processing" do
+
+    end
   end
 end
