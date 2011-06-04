@@ -72,8 +72,8 @@ describe Mortimer::Core do
 
   describe "#process -- Getting Morimer to convert Markdown to HTML" do
     before(:each) do
-      input_dir   = "../../test_input"
-      output_dir  = "../../test_output"
+      input_dir   = File.expand_path(File.dirname(__FILE__) + "/../test_input")
+      output_dir  = File.expand_path(File.dirname(__FILE__) + "/../test_output")
 
       if Dir.exists?(output_dir)
         FileUtils.rm_rf(output_dir)
@@ -83,10 +83,17 @@ describe Mortimer::Core do
 
       # Instantiate a new object with the test_input and test_output directories
       @mort = Mortimer::Core.new(input_dir, output_dir)
+      @mort.process
     end
 
     context "header and footer processing" do
+      methods = %w(header footer)
 
+      methods.each do |method|
+        specify "populates #{method}" do
+          @mort.send(method).should_not be_nil
+        end
+      end
     end
 
     context "CSS processing" do

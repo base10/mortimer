@@ -1,8 +1,9 @@
 module Mortimer
   class Core
     require "maruku"
+    require "fileutils"
 
-    attr_accessor :input_dir, :output_dir
+    attr_accessor :input_dir, :output_dir, :header, :footer
 
     def initialize (input_dir, output_dir)
       @input_dir  = input_dir
@@ -12,7 +13,12 @@ module Mortimer
     end
 
     def process
+      # Read header and footer files
 
+      # Copy CSS from input directory to output directory, if it exists
+        # If not, we might want to raise a warning here
+
+      # Run through the input directory and process any Markdown files
 
     end
 
@@ -40,7 +46,7 @@ module Mortimer
 
       if !@input_dir.empty? && !Dir.exists?(@output_dir)
         begin
-          Dir.mkdir(@output_dir)
+          FileUtils.mkdir_p(@output_dir)
         rescue Exception => e
           errors.push "Could not create directory: #{e.to_s}"
         end
