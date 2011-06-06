@@ -14,6 +14,7 @@ module Mortimer
 
     def process
       # Read header and footer files
+      read_header_footer
 
       # Copy CSS from input directory to output directory, if it exists
         # If not, we might want to raise a warning here
@@ -23,6 +24,11 @@ module Mortimer
     end
 
     protected
+
+    def read_header_footer
+      @header = IO.read("#{input_dir}/header.snippet")
+      @footer = IO.read("#{input_dir}/footer.snippet")
+    end
 
     def validate_directories
       errors = Array.new

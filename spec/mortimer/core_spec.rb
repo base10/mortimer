@@ -94,14 +94,23 @@ describe Mortimer::Core do
           @mort.send(method).should_not be_nil
         end
       end
+
+      context "fails" do
+        # TODO: setup a fake file system
+
+        specify "when header is unavailable"
+        specify "when footer is unavailable"
+      end
     end
 
     context "CSS processing" do
-
+      specify "markdown file should be copied to the out directory"
     end
 
     context "Markdown file processing" do
+      context "should process only Markdown files" do
 
+      end
     end
   end
 end
