@@ -72,17 +72,17 @@ describe Mortimer::Core do
 
   describe "#process -- Getting Morimer to convert Markdown to HTML" do
     before(:each) do
-      input_dir   = File.expand_path(File.dirname(__FILE__) + "/../test_input")
-      output_dir  = File.expand_path(File.dirname(__FILE__) + "/../test_output")
+      @input_dir   = File.expand_path(File.dirname(__FILE__) + "/../test_input")
+      @output_dir  = File.expand_path(File.dirname(__FILE__) + "/../test_output")
 
-      if Dir.exists?(output_dir)
-        FileUtils.rm_rf(output_dir)
+      if Dir.exists?(@output_dir)
+        FileUtils.rm_rf(@output_dir)
       end
 
-      Dir.mkdir(output_dir)
+      Dir.mkdir(@output_dir)
 
       # Instantiate a new object with the test_input and test_output directories
-      @mort = Mortimer::Core.new(input_dir, output_dir)
+      @mort = Mortimer::Core.new(@input_dir, @output_dir)
       @mort.process
     end
 
@@ -104,7 +104,9 @@ describe Mortimer::Core do
     end
 
     context "CSS processing" do
-      specify "markdown file should be copied to the out directory"
+      specify "markdown file should be copied to the out directory" do
+        File.exists?(@output_dir + "/markdown.css").should be_true
+      end
     end
 
     context "Markdown file processing" do

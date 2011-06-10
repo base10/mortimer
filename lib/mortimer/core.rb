@@ -13,17 +13,18 @@ module Mortimer
     end
 
     def process
-      # Read header and footer files
       read_header_footer
-
-      # Copy CSS from input directory to output directory, if it exists
-        # If not, we might want to raise a warning here
+      copy_css
 
       # Run through the input directory and process any Markdown files
 
     end
 
     protected
+
+    def copy_css
+      FileUtils.cp("#{input_dir}/markdown.css","#{output_dir}/markdown.css")
+    end
 
     def read_header_footer
       @header = IO.read("#{input_dir}/header.snippet")
