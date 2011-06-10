@@ -104,14 +104,26 @@ describe Mortimer::Core do
     end
 
     context "CSS processing" do
-      specify "markdown file should be copied to the out directory" do
+      specify "markdown css file should be copied to the out directory" do
         File.exists?(@output_dir + "/markdown.css").should be_true
       end
     end
 
     context "Markdown file processing" do
-      context "should process only Markdown files" do
+      it "should process only Markdown files" do
+        files = Dir.entries(@output_dir)
 
+        files.include?("foo.html").should be_true
+        files.include?("bar.html").should be_true
+        files.include?("baz.html").should be_false
+      end
+
+      it "should include the header" do
+        File.read(@output_dir + "/foo.html").should match(/<h1>Test Document<\/h1>/)
+      end
+
+      it "should include the footer" do
+        File.read(@output_dir + "/foo.html").should match(/<\/body>/)
       end
     end
   end

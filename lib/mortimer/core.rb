@@ -15,15 +15,29 @@ module Mortimer
     def process
       read_header_footer
       copy_css
+      process_markdown_files
 
       # Run through the input directory and process any Markdown files
-
     end
 
     protected
 
     def copy_css
       FileUtils.cp("#{input_dir}/markdown.css","#{output_dir}/markdown.css")
+    end
+
+    def process_markdown_files
+      Dir.glob("#{@input_dir}/*.md").each do |markdown_file|
+        basename = File.basename(markdown_file, '.md')
+        outfile  = "#{output_dir}/#{basename}.html"
+        md_doc   = Maruku.new(IO.read(markdown_file))
+
+        File.open(outfile, 'w') do |out|
+          out.write(@header)
+          out.write(md_doc.to_html)
+          out.write(@footer)
+        end
+      end
     end
 
     def read_header_footer
